@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import heroProduct from "@/assets/headphones.jpg";
+import heroProduct from "@/assets/leather-jacket.jpg";
 
 const Hero = () => {
   return (
@@ -13,12 +13,12 @@ const Hero = () => {
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
                 Premium
                 <span className="block bg-gradient-primary bg-clip-text text-transparent">
-                  Audio Experience
+                  Fashion Forward
                 </span>
               </h1>
               <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl">
-                Discover our curated collection of premium electronics designed 
-                for the modern lifestyle. Quality meets innovation.
+                Discover our curated collection of premium clothing designed 
+                for the modern lifestyle. Where style meets sophistication.
               </p>
             </div>
             
@@ -51,7 +51,7 @@ const Hero = () => {
                 <div className="relative">
                   <img
                     src={heroProduct}
-                    alt="Premium Headphones"
+                    alt="Premium Leather Jacket"
                     className="w-80 h-80 object-contain filter drop-shadow-2xl"
                   />
                   

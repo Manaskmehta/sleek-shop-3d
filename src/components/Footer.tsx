@@ -9,10 +9,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Brand Section */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold">LUXE</h3>
+            <h3 className="text-2xl font-bold">NOIR</h3>
             <p className="text-primary-foreground/80 max-w-xs">
-              Premium electronics and accessories for the modern lifestyle. 
-              Quality meets innovation in every product.
+              Premium fashion and accessories for the modern lifestyle. 
+              Where style meets sophistication in every piece.
             </p>
             <div className="flex space-x-3">
               <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/10">
@@ -58,13 +58,13 @@ const Footer = () => {
             <p className="text-primary-foreground/80 text-sm">
               Subscribe to get special offers, updates and exclusive deals.
             </p>
-            <div className="flex">
+            <div className="flex flex-col sm:flex-row gap-2">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-3 py-2 bg-white/10 border border-white/20 rounded-l-lg text-primary-foreground placeholder:text-primary-foreground/60 focus:outline-none focus:border-white/40"
+                className="flex-1 min-w-0 px-3 py-2 bg-white/10 border border-white/20 rounded-lg sm:rounded-r-none text-primary-foreground placeholder:text-primary-foreground/60 focus:outline-none focus:border-white/40"
               />
-              <Button className="bg-white text-primary hover:bg-white/90 rounded-l-none">
+              <Button className="bg-white text-primary hover:bg-white/90 rounded-lg sm:rounded-l-none whitespace-nowrap">
                 Subscribe
               </Button>
             </div>
@@ -74,7 +74,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-primary-foreground/80 text-sm">
-            © 2024 LUXE. All rights reserved.
+            © 2024 NOIR. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground text-sm transition-colors">

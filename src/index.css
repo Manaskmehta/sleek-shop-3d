@@ -50,9 +50,13 @@
     --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 98%));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(0 0% 96%));
     
-    /* Transitions */
+    /* Transitions and animations */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Scroll animations */
+    --scroll-offset: 100px;
+  }
 
     --sidebar-background: 0 0% 98%;
 
@@ -167,5 +171,31 @@
 
   .transition-bounce {
     transition: var(--transition-bounce);
+  }
+
+  /* Scroll animations */
+  .scroll-animate {
+    opacity: 0;
+    transform: translateY(var(--scroll-offset));
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .scroll-animate.animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .scroll-scale {
+    transform: scale(0.9);
+    transition: transform 0.6s ease-out;
+  }
+
+  .scroll-scale.animate {
+    transform: scale(1);
+  }
+
+  /* Parallax effects */
+  .parallax {
+    transition: transform 0.1s ease-out;
   }
 }

@@ -9,7 +9,7 @@ const Header = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold tracking-tight">LUXE</h1>
+            <h1 className="text-2xl font-bold tracking-tight">NOIR</h1>
           </div>
 
           {/* Desktop Navigation */}
@@ -56,9 +56,10 @@ const Header = () => {
             {/* Cart */}
             <Button variant="cart" size="icon" className="relative">
               <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-primary text-[10px] font-bold text-primary-foreground flex items-center justify-center">
-                3
-              </span>
+              <div className="absolute -top-2 -right-2 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
+                <span className="text-[10px] font-bold text-primary-foreground">3</span>
+                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-primary rounded-full"></div>
+              </div>
             </Button>
 
             {/* Mobile menu */}
