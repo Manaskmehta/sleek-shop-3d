@@ -12,9 +12,10 @@ const Hero = () => {
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
                 Premium
-                <span className="block bg-gradient-primary bg-clip-text text-transparent">
-                  Fashion Forward
-                </span>
+                <div className="w-full h-16 bg-black flex items-center pl-6 my-2">
+                  <span className="text-white text-5xl font-semibold">Collection</span>
+                </div>
+             
               </h1>
               <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl">
                 Discover our curated collection of premium clothing designed 

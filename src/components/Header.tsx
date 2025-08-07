@@ -1,6 +1,7 @@
 import { ShoppingCart, Search, Menu, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -9,17 +10,17 @@ const Header = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold tracking-tight">NOIR</h1>
+            <Link to="/" className="text-2xl font-bold tracking-tight">
+              NOIR
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-sm font-medium transition-colors hover:text-primary">
+            <Link to="/products" className="text-sm font-medium transition-colors hover:text-primary">
               Products
-            </a>
-            <a href="#" className="text-sm font-medium transition-colors hover:text-primary">
-              Categories
-            </a>
+            </Link>
+            
             <a href="#" className="text-sm font-medium transition-colors hover:text-primary">
               About
             </a>
@@ -56,10 +57,16 @@ const Header = () => {
             {/* Cart */}
             <Button variant="cart" size="icon" className="relative">
               <ShoppingCart className="h-5 w-5" />
-              <div className="absolute -top-2 -right-2 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-[10px] font-bold text-primary-foreground">3</span>
-                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-primary rounded-full"></div>
+              <div className="absolute -top-2 -right-2 h-5 w-5 bg-primary rounded-full flex flex-col items-center justify-start">
+                <span className="text-[10px] font-bold text-primary-foreground leading-none">3</span>
+                <div className="w-1.5 h-1.5 bg-black rounded-full mt-0.5"></div>
               </div>
+            </Button>
+
+            {/* Login Button */}
+            <Button variant="outline" size="default" className="flex items-center gap-2">
+              <User className="h-5 w-5" />
+              Login
             </Button>
 
             {/* Mobile menu */}
