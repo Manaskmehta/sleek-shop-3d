@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Heart, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "@/hooks/useCart";
 
 interface ProductCardProps {
   id: string;
@@ -16,6 +17,7 @@ const ProductCard = ({ id, name, price, originalPrice, image, category }: Produc
   const [isLiked, setIsLiked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
+  const { addItem } = useCart();
 
   return (
     <div 
@@ -55,7 +57,16 @@ const ProductCard = ({ id, name, price, originalPrice, image, category }: Produc
         <div className={`absolute inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center transition-smooth ${
           isHovered ? "opacity-100" : "opacity-0"
         }`}>
-          <Button variant="premium" size="sm" className="shadow-3d">
+          <Button
+            variant="premium"
+            size="sm"
+            className="shadow-3d"
+            onClick={(e) => {
+              e.stopPropagation();
+              addItem({ id, name, price, image, category, quantity: 1 });
+              navigate('/cart');
+            }}
+          >
             <ShoppingCart className="h-4 w-4 mr-2" />
             Quick Add
           </Button>

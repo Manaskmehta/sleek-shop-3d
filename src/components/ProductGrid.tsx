@@ -1,73 +1,7 @@
 import ProductCard from "./ProductCard";
 import { Button } from "@/components/ui/button";
-import leatherJacket from "@/assets/leather-jacket.jpg";
-import whiteTshirt from "@/assets/white-tshirt.jpg";
-import denimJeans from "@/assets/denim-jeans.jpg";
-import blackSneakers from "@/assets/black-sneakers.jpg";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-
-const products = [
-  {
-    id: "1",
-    name: "Premium Black Leather Jacket",
-    price: 299.99,
-    originalPrice: 399.99,
-    image: leatherJacket,
-    category: "Outerwear"
-  },
-  {
-    id: "2",
-    name: "Essential White T-Shirt",
-    price: 49.99,
-    image: whiteTshirt,
-    category: "Basics"
-  },
-  {
-    id: "3",
-    name: "Classic Denim Jeans",
-    price: 129.99,
-    originalPrice: 159.99,
-    image: denimJeans,
-    category: "Denim"
-  },
-  {
-    id: "4",
-    name: "Black Leather Sneakers",
-    price: 189.99,
-    image: blackSneakers,
-    category: "Footwear"
-  },
-  {
-    id: "5",
-    name: "Premium Leather Jacket V2",
-    price: 349.99,
-    image: leatherJacket,
-    category: "Outerwear"
-  },
-  {
-    id: "6",
-    name: "Vintage White Tee",
-    price: 59.99,
-    originalPrice: 79.99,
-    image: whiteTshirt,
-    category: "Basics"
-  },
-  {
-    id: "7",
-    name: "Raw Denim Jeans",
-    price: 179.99,
-    image: denimJeans,
-    category: "Denim"
-  },
-  {
-    id: "8",
-    name: "Premium Black Sneakers",
-    price: 249.99,
-    originalPrice: 299.99,
-    image: blackSneakers,
-    category: "Footwear"
-  }
-];
+import { products as allProducts } from "@/data/products";
 
 const ProductGrid = () => {
   const { addToRefs } = useScrollAnimation();
@@ -100,8 +34,16 @@ const ProductGrid = () => {
 
         {/* Products Grid */}
         <div ref={addToRefs} className="scroll-animate grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-          {products.map((product) => (
-            <ProductCard key={product.id} {...product} />
+          {allProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              price={product.price}
+              originalPrice={product.originalPrice}
+              image={product.images[0]}
+              category={product.category}
+            />
           ))}
         </div>
 

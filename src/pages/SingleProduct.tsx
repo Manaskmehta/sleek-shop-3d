@@ -5,36 +5,10 @@ import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useScrollAnimation, useParallax } from "@/hooks/useScrollAnimation";
-
-// Mock product data - in real app this would come from an API
-const productData = {
-  "1": {
-    id: "1",
-    name: "Premium Black Leather Jacket",
-    price: 299.99,
-    originalPrice: 399.99,
-    images: ["/src/assets/leather-jacket.jpg"],
-    category: "Outerwear",
-    description: "Crafted from the finest Italian leather, this jacket combines timeless style with modern comfort. Perfect for any season.",
-    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-    colors: ["Black", "Brown", "Navy"],
-    features: ["100% Genuine Leather", "Italian Craftsmanship", "Modern Fit", "Multiple Pockets"],
-    reviews: { average: 4.8, count: 142 }
-  },
-  "2": {
-    id: "2", 
-    name: "Essential White T-Shirt",
-    price: 49.99,
-    originalPrice: undefined,
-    images: ["/src/assets/white-tshirt.jpg"],
-    category: "Basics",
-    description: "The perfect white tee made from premium organic cotton. A wardrobe essential that never goes out of style.",
-    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-    colors: ["White", "Black", "Gray"],
-    features: ["100% Organic Cotton", "Pre-shrunk", "Reinforced Seams", "Comfortable Fit"],
-    reviews: { average: 4.9, count: 298 }
-  }
-};
+import { getProductById } from "@/data/products";
+import { useCart } from "@/hooks/useCart";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -48,7 +22,8 @@ const SingleProduct = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  const product = productData[id as keyof typeof productData];
+  const product = id ? getProductById(id) : undefined;
+  const { addItem } = useCart();
 
   if (!product) {
     return <div>Product not found</div>;
@@ -59,6 +34,23 @@ const SingleProduct = () => {
       <Header />
       
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-6">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/products">Products</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{product.name}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
         {/* Back Button */}
         <Button 
           variant="ghost" 
@@ -93,6 +85,20 @@ const SingleProduct = () => {
                   </div>
                 )}
               </div>
+            </div>
+            {/* Thumbnails */}
+            <div className="grid grid-cols-4 gap-3">
+              {product.images.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveImageIndex(idx)}
+                  className={`rounded-lg border bg-card p-2 hover:shadow-subtle transition-smooth ${
+                    activeImageIndex === idx ? "ring-2 ring-primary" : ""
+                  }`}
+                >
+                  <img src={img} alt={`${product.name} ${idx + 1}`} className="h-20 w-full object-contain" />
+                </button>
+              ))}
             </div>
           </div>
 
@@ -202,7 +208,25 @@ const SingleProduct = () => {
               </div>
 
               <div className="flex space-x-4">
-                <Button variant="premium" size="lg" className="flex-1">
+                <Button
+                  variant="premium"
+                  size="lg"
+                  className="flex-1"
+                  onClick={() => {
+                    if (!product) return;
+                    addItem({
+                      id: product.id,
+                      name: product.name,
+                      price: product.price,
+                      image: product.images[0],
+                      category: product.category,
+                      size: selectedSize || undefined,
+                      color: selectedColor || undefined,
+                      quantity,
+                    });
+                    navigate('/cart');
+                  }}
+                >
                   <ShoppingCart className="h-5 w-5 mr-2" />
                   Add to Cart
                 </Button>
@@ -212,17 +236,45 @@ const SingleProduct = () => {
               </div>
             </div>
 
-            {/* Features */}
-            <div ref={addToRefs} className="scroll-animate space-y-3">
-              <h3 className="font-semibold">Features</h3>
-              <ul className="space-y-2">
-                {product.features.map((feature, index) => (
-                  <li key={index} className="flex items-center text-sm text-muted-foreground">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full mr-3"></div>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+            {/* Details Tabs */}
+            <div ref={addToRefs} className="scroll-animate">
+              <Tabs defaultValue="details" className="w-full">
+                <TabsList>
+                  <TabsTrigger value="details">Details</TabsTrigger>
+                  <TabsTrigger value="reviews">Reviews</TabsTrigger>
+                  <TabsTrigger value="shipping">Shipping</TabsTrigger>
+                </TabsList>
+                <TabsContent value="details" className="space-y-3">
+                  <h3 className="font-semibold">Features</h3>
+                  <ul className="space-y-2">
+                    {product.features.map((feature, index) => (
+                      <li key={index} className="flex items-center text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full mr-3"></div>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </TabsContent>
+                <TabsContent value="reviews" className="space-y-2 text-sm text-muted-foreground">
+                  <div className="flex items-center space-x-2">
+                    <div className="flex text-yellow-400">
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <Star key={i} className={`h-4 w-4 ${i < Math.floor(product.reviews.average) ? 'fill-current' : ''}`} />
+                      ))}
+                    </div>
+                    <span>
+                      {product.reviews.average} average based on {product.reviews.count} reviews
+                    </span>
+                  </div>
+                  <p>"Fantastic quality and fit!" — Verified Buyer</p>
+                  <p>"Exactly as described, fast shipping." — Verified Buyer</p>
+                </TabsContent>
+                <TabsContent value="shipping" className="space-y-2 text-sm text-muted-foreground">
+                  <p>Free standard shipping on orders over $100.</p>
+                  <p>30-day hassle-free returns.</p>
+                  <p>International shipping available.</p>
+                </TabsContent>
+              </Tabs>
             </div>
 
             {/* Guarantees */}
