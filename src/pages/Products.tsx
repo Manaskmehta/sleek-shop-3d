@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import ProductGrid from "@/components/ProductGrid";
+import ProductCatalog from "@/components/ProductCatalog";
 import Footer from "@/components/Footer";
 
 const Products = () => {
@@ -7,7 +7,7 @@ const Products = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main>
-        <ProductGrid />
+        <ProductCatalog />
       </main>
       <Footer />
     </div>

@@ -31,7 +31,7 @@ const ProductCard = ({ id, name, price, originalPrice, image, category }: Produc
         <img
           src={image}
           alt={name}
-          className="w-full h-full object-contain p-4 transition-smooth group-hover:scale-105"
+          className="w-full h-full object-contain p-4 transition-all duration-300 ease-out group-hover:scale-110"
         />
         
         {/* Discount badge */}
@@ -53,24 +53,7 @@ const ProductCard = ({ id, name, price, originalPrice, image, category }: Produc
           <Heart className={`h-4 w-4 ${isLiked ? "fill-current" : ""}`} />
         </Button>
 
-        {/* Quick add to cart overlay */}
-        <div className={`absolute inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center transition-smooth ${
-          isHovered ? "opacity-100" : "opacity-0"
-        }`}>
-          <Button
-            variant="premium"
-            size="sm"
-            className="shadow-3d"
-            onClick={(e) => {
-              e.stopPropagation();
-              addItem({ id, name, price, image, category, quantity: 1 });
-              navigate('/cart');
-            }}
-          >
-            <ShoppingCart className="h-4 w-4 mr-2" />
-            Quick Add
-          </Button>
-        </div>
+
       </div>
 
       {/* Product Info */}
