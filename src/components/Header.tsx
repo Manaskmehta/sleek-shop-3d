@@ -15,7 +15,7 @@ const Header = () => {
   useEffect(() => {
     const auth = localStorage.getItem("isAuthenticated");
     const user = localStorage.getItem("username");
-    
+
     if (auth === "true" && user) {
       setIsAuthenticated(true);
       setUsername(user);
@@ -37,7 +37,7 @@ const Header = () => {
             <Link to="/products" className="text-sm font-medium transition-colors hover:text-primary">
               Products
             </Link>
-            
+
             <Link to="/about" className="text-sm font-medium transition-colors hover:text-primary">
               About
             </Link>
@@ -52,9 +52,8 @@ const Header = () => {
             <div className="hidden sm:flex items-center space-x-2">
               <Input
                 placeholder="Search products"
-                className={`h-9 transition-all ease-out duration-500 md:duration-700 ${
-                  isSearchOpen ? "w-40 md:w-64 opacity-100" : "w-0 opacity-0 pointer-events-none"
-                }`}
+                className={`h-9 transition-all ease-out duration-500 md:duration-700 ${isSearchOpen ? "w-40 md:w-64 opacity-100" : "w-0 opacity-0 pointer-events-none"
+                  }`}
                 autoFocus={isSearchOpen}
               />
               <Button
@@ -68,20 +67,33 @@ const Header = () => {
             </div>
 
             {/* Cart */}
-            <Button variant="cart" size="icon" className="relative" onClick={() => navigate('/cart')}>
-              <ShoppingCart className="h-5 w-5" />
-              {totalQuantity > 0 && (
-                <div className="absolute -top-2 -right-2 h-5 min-w-5 px-1 bg-primary rounded-full flex items-center justify-center">
-                  <span className="text-[10px] font-bold text-primary-foreground leading-none">{totalQuantity}</span>
-                </div>
-              )}
-            </Button>
+            <Button
+  variant="cart"
+  size="icon"
+  className="relative overflow-visible"
+  onClick={() => navigate("/cart")}
+>
+  <ShoppingCart className="h-5 w-5" />
+  {totalQuantity > 0 && (
+    <span
+      className="absolute -top-1 -right-1
+                 flex items-center justify-center
+                 h-5 w-5 rounded-full bg-black text-white
+                 text-[10px] font-bold leading-none"
+    >
+      {totalQuantity}
+    </span>
+  )}
+</Button>
+
+
+
 
             {/* Auth Button */}
             {isAuthenticated ? (
-              <Button 
-                variant="outline" 
-                size="default" 
+              <Button
+                variant="outline"
+                size="default"
                 className="flex items-center gap-2"
                 onClick={() => navigate('/account')}
               >
@@ -89,9 +101,9 @@ const Header = () => {
                 {username}
               </Button>
             ) : (
-              <Button 
-                variant="outline" 
-                size="default" 
+              <Button
+                variant="outline"
+                size="default"
                 className="flex items-center gap-2"
                 onClick={() => navigate('/login')}
               >

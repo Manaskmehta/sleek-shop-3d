@@ -2,9 +2,20 @@ import ProductCard from "./ProductCard";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { products as allProducts } from "@/data/products";
+import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ProductGrid = () => {
   const { addToRefs } = useScrollAnimation();
+  const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const filteredProducts = useMemo(() => {
+    if (selectedCategory === "All") {
+      return allProducts;
+    }
+    return allProducts.filter(product => product.category === selectedCategory);
+  }, [selectedCategory]);
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,9 +34,10 @@ const ProductGrid = () => {
           {["All", "Outerwear", "Basics", "Denim", "Footwear"].map((category) => (
             <Button
               key={category}
-              variant={category === "All" ? "default" : "outline"}
+              variant={selectedCategory === category ? "default" : "outline"}
               size="sm"
               className="transition-smooth"
+              onClick={() => setSelectedCategory(category)}
             >
               {category}
             </Button>
@@ -34,7 +46,7 @@ const ProductGrid = () => {
 
         {/* Products Grid */}
         <div ref={addToRefs} className="scroll-animate grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-          {allProducts.map((product) => (
+          {filteredProducts.map((product) => (
             <ProductCard
               key={product.id}
               id={product.id}
@@ -47,10 +59,15 @@ const ProductGrid = () => {
           ))}
         </div>
 
-        {/* Load More */}
+        {/* See All Products */}
         <div className="text-center">
-          <Button variant="outline" size="lg" className="min-w-[200px]">
-            Load More Products
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="min-w-[200px]"
+            onClick={() => navigate('/products')}
+          >
+            See all products
           </Button>
         </div>
       </div>
